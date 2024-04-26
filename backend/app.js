@@ -2,12 +2,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
+require('dotenv').config({path: ".env"});
 
 const bookRoutes = require('./routes/books');
 const userRoutes = require('./routes/user');
 
 // Connexion db MongoDB
-mongoose.connect('mongodb+srv://afuand:Genetique23@clustertest.ha7jibu.mongodb.net/?retryWrites=true&w=majority&appName=ClusterTest',
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PW}@${process.env.MONGO_CLUSTER}`,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))

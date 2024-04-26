@@ -91,11 +91,10 @@ exports.getAllThings = (req, res, next) =>{
 // Logique métier note
 exports.rateThing = (req, res, next) => {
     // Creation des objets
-    const average = book.averageRating;
     const newRating = { 
         userId : req.auth.userId,
         grade : req.body.rating
-                };
+    };
     const bookId = req.params.id;
     // Si la note n'est pas comprise entre 0 et 5
     if( newRating.grade > 5 || newRating.grade < 0 ){
@@ -114,7 +113,7 @@ exports.rateThing = (req, res, next) => {
                 } else {
                 // Sinon ajout aux notes de l'objet, puis recalcul de la moyenne et sauvegarde des nouvelles données
                     book.ratings.push( newRating );
-                    average = ( average*( book.ratings.length - 1 ) + newRating.grade ) / book.ratings.length;
+                    book.averageRating = ( book.averageRating*( book.ratings.length - 1 ) + newRating.grade ) / book.ratings.length;
                     return book.save();
                 };
             })
